@@ -12,3 +12,8 @@ body {
     background-color: azure;
     position: absolute;
 }
+
+.obstacle {
+    background-color: rgb(255, 71, 39);
+    position: absolute;
+}

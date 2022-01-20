@@ -1,9 +1,34 @@
 class Game {
+    constructor() {
+        this.obstacleArr = [];
+        this.timer = 0;
+    }
     start(){
+        
         this.player = new Player();
         this.player.domElm = this.createDomElm(this.player);
         this.drawDomElm(this.player);
         this.addEventListeners();
+        
+        
+        setInterval(() => {
+            // create obstacle
+           this.timer++
+           if(this.timer%3 === 0){
+            const newObstacle = new Obstacle();
+            this.obstacleArr.push(newObstacle)
+            newObstacle.domElm = this.createDomElm(newObstacle);
+            this.drawDomElm(newObstacle);
+           }
+            // move obstacle
+            this.obstacleArr.forEach((e) => {
+                e.moveDown();
+                this.drawDomElm(e);
+            });
+            
+        }, 1000);
+        
+        
     }
     addEventListeners(){
         document.addEventListener("keydown", (e) => { 
@@ -13,7 +38,7 @@ class Game {
                 this.player.moveRight();
             }
             this.drawDomElm(this.player);
-        });
+        })
     }
 
     createDomElm(instance){
@@ -37,7 +62,7 @@ class Game {
 class Player {
   constructor() {
     this.className = "player"
-    this.positionX = 0;
+    this.positionX = 50;
     this.positionY = 0;
     this.width = 10;
     this.height = 10;
@@ -54,6 +79,22 @@ class Player {
     console.log("moving right" + this.positionX)
   }
 }
+
+class Obstacle {
+    constructor() {
+      this.className = "obstacle"
+      this.positionX = 50;
+      this.positionY = 90;
+      this.width = 10;
+      this.height = 10;
+      this.domElm = null;
+    }
+  
+    moveDown() {
+      this.positionY -= 11; //precentages
+      console.log("moving down" + this.positionY);
+    }
+  }
 
 const game = new Game();
 game.start();

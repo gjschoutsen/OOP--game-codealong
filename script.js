@@ -23,10 +23,22 @@ class Game {
             this.obstacleArr.forEach((e) => {
                 e.moveDown();
                 this.drawDomElm(e);
+            // check collision
+            this.detectCollisionWithPlayer(e);
+
             });            
-        }, 1000);
-                
+        }, 500);    
     }
+
+    detectCollisionWithPlayer(e){
+      if (this.player.positionX < e.positionX + e.width &&
+          this.player.positionX + this.player.width > e.positionX &&
+          this.player.positionY < e.positionY + e.height &&
+          this.player.height + this.player.positionY > e.positionY) {
+        // collision detected!
+        alert ("Game Over!");
+    }
+  }
     addEventListeners(){
         document.addEventListener("keydown", (e) => { 
             if(e.key === "ArrowLeft"){
@@ -35,7 +47,7 @@ class Game {
                 this.player.moveRight();
             }
             this.drawDomElm(this.player);
-        })
+        });
     }
 
     createDomElm(instance){
@@ -88,7 +100,7 @@ class Obstacle {
   }
 
   moveDown() {
-    this.positionY -= 11; //precentages
+    this.positionY -= 11;
     console.log("moving down" + this.positionY);
   }
 }

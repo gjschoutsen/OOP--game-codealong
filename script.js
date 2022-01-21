@@ -2,6 +2,8 @@ class Game {
     constructor() {
         this.obstacleArr = [];
         this.timer = 0;
+        this.refreshRate = 1000 / 60;
+        this.obstacleRate = 60;
     }
     start(){
         
@@ -13,28 +15,27 @@ class Game {
         setInterval(() => {
             // create obstacle
            this.timer++
-           if(this.timer%3 === 0){
+           if(this.timer%this.obstacleRate === 0){
             const newObstacle = new Obstacle();
             this.obstacleArr.push(newObstacle)
             newObstacle.domElm = this.createDomElm(newObstacle);
             this.drawDomElm(newObstacle);
            }
             // move obstacle
-            this.obstacleArr.forEach((e) => {
-                e.moveDown();
-                this.drawDomElm(e);
+            this.obstacleArr.forEach((obj) => {
+                obj.moveDown();
+                this.drawDomElm(obj);
             // check collision
-            this.detectCollisionWithPlayer(e);
-
+            this.detectCollisionWithPlayer(obj);
             });            
-        }, 500);    
+        }, this.refreshRate);    
     }
 
-    detectCollisionWithPlayer(e){
-      if (this.player.positionX < e.positionX + e.width &&
-          this.player.positionX + this.player.width > e.positionX &&
-          this.player.positionY < e.positionY + e.height &&
-          this.player.height + this.player.positionY > e.positionY) {
+    detectCollisionWithPlayer(element){
+      if (this.player.positionX < element.positionX + element.width &&
+        this.player.positionX + this.player.width > element.positionX &&
+        this.player.positionY < element.positionY + element.height &&
+        this.player.height + this.player.positionY > element.positionY) {
         // collision detected!
         alert ("Game Over!");
     }
@@ -100,7 +101,7 @@ class Obstacle {
   }
 
   moveDown() {
-    this.positionY -= 11;
+    this.positionY -= 0.6;
     console.log("moving down" + this.positionY);
   }
 }

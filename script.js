@@ -21,8 +21,9 @@ class Game {
             newObstacle.domElm = this.createDomElm(newObstacle);
             this.drawDomElm(newObstacle);
            }
-            // move obstacle
+            // iterate trough obstacle array
             this.obstacleArr.forEach((obj) => {
+            // move obstacle    
                 obj.moveDown();
                 this.drawDomElm(obj);
             // check collision
@@ -72,10 +73,10 @@ class Game {
 class Player {
   constructor() {
     this.className = "player";
-    this.positionX = 50;
-    this.positionY = 0;
     this.width = 10;
     this.height = 10;
+    this.positionX = 50;
+    this.positionY = 0;
     this.domElm = null;
   }
 
@@ -93,15 +94,15 @@ class Player {
 class Obstacle {
   constructor() {
     this.className = "obstacle";
-    this.positionX = 50;
-    this.positionY = 110;
     this.width = 10;
     this.height = 10;
+    this.positionX = Math.floor(Math.random() * (100 - this.width + 1));
+    this.positionY = 110;
     this.domElm = null;
   }
 
   moveDown() {
-    this.positionY -= 0.6;
+    this.positionY -= 1;
     console.log("moving down" + this.positionY);
   }
 }
